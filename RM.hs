@@ -168,8 +168,8 @@ infiniteLoop :: Integer
 infiniteLoop = encodeList [
   encodeAdd 0 0]
 
-cw1 :: Integer
-cw1 = encodeList [
+cwQ1 :: Integer
+cwQ1 = encodeList [
   encodeSub 1 2 1, -- L₀: R₁⁻ → L₂, L₁
   encodeHalt,      -- L₁: HALT
   encodeSub 1 3 4, -- L₂: R₁⁻ → L₃, L₄
@@ -177,8 +177,8 @@ cw1 = encodeList [
   encodeHalt,      -- L₄: HALT
   encodeAdd 0 0]   -- L₅: R₀⁺ → L₀
 
-cw2 :: Integer
-cw2 = 2^46 * 20483
+cwQ2 :: Integer
+cwQ2 = 2^46 * 20483
 
 printProgram :: Integer -> IO ()
 printProgram gn = do
