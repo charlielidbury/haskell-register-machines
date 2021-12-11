@@ -36,6 +36,11 @@ L₅: R₀⁺ → L₀
 [2,1]
 [2,0]
         Final State: [2,0]
+*Main> printProgram cwQ2
+L₀: R₀⁻ → L₂, L₁
+L₁: HALT
+L₂: R₀⁻ → L₀, L₁
+L₃: R₀⁺ → L₀
 ```
 
 ## Example program definitions:
