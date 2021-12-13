@@ -181,7 +181,6 @@ cwQ2 :: Integer
 cwQ2 = 2^46 * 20483
 
 -- Sets R₀ = 2n with n + 3 instructions
--- $> cwQ3a 19887 [0,0,0]
 cwQ3a :: Int -> Instruction
 cwQ3a n = l0
   where
