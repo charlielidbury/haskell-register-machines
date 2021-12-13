@@ -180,17 +180,38 @@ cwQ1 = encodeList [
 cwQ2 :: Integer
 cwQ2 = 2^46 * 20483
 
+-- Sets R₀ = 2n with n + 3 instructions
+-- $> cwQ3a 19887 [0,0,0]
+cwQ3a :: Int -> Instruction
+cwQ3a n = l0
+  where
+    -- 3 instructions
+    l0 = add 1 l1
+    l1 = add 1 l2
+    l2 = sub 1 addN halt
+    -- n instructions
+    addN = iterate (add 0) l2 !! n
+    -- equivilant to
+    -- _l0 = add 0 _l1
+    -- _l1 = add 0 _l2
+    -- ...
+    -- _l{n - 2} = add 0 _l{n - 1}
+    -- _l{n - 1} = add 0 l2
+
 printProgram :: Integer -> IO ()
 printProgram gn = do
   putStrLn $ formatProgram $ decodeProgram gn
 
-executeProgram :: Integer -> State -> IO ()
-executeProgram gn state = do
+analyseEncodedProgram :: Integer -> State -> IO ()
+analyseEncodedProgram gn state = do
   putStrLn $ "\tEncoded Program: " ++ show gn
-  putStrLn $ "\tDecoded Program: \n" ++ formatProgram decoded
+  analyseProgram (decodeProgram gn) state
+
+analyseProgram :: Program -> State -> IO ()
+analyseProgram program state = do
+  putStrLn $ "\tDecoded Program: \n" ++ formatProgram program
   putStrLn $ "\tInitial State: " ++ show state
-  putStrLn $ (\(!s) -> "\tFinal State: " ++ show s) state'
-    where
-      decoded = decodeProgram gn
-      state' = runProgram decoded state
+  putStrLn $ (\(!s) -> "\tFinal State: " ++ show s) (runProgram program state)
+
+
 
