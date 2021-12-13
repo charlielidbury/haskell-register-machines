@@ -26,7 +26,10 @@ subScript = map s
     s '4' = '\8324'
     s '5' = '\8325'
     s '6' = '\8326'
-    s _ = undefined
+    s '7' = '\8327'
+    s '8' = '\8328'
+    s '9' = '\8329'
+    s c = error $ "Unsupported subscript: " ++ [c]
 
 superPlus, superMinus :: Char
 superPlus = '\8314'
