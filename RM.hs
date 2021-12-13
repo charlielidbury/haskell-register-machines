@@ -128,9 +128,9 @@ decodeProgram :: Integer -> Program
 decodeProgram = decodeProgramFromList . decodeList
 
 decodeProgramFromList :: [Integer] -> Program
-decodeProgramFromList l = program
+decodeProgramFromList l = take (length l) program
   where
-    program = map (decodeInstruction program) l
+    program = map (decodeInstruction program) (l ++ repeat encodeHalt)
 
 -- Execution
 runProgram :: Program -> State -> State
