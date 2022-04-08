@@ -13,6 +13,23 @@ runProgram :: Program -> State -> State
 runProgram = snd . head
 ```
 
+## Simple program if you just want to simulate.
+```haskell
+simpleExample :: Instruction
+simpleExample = l0
+  where
+    l0 = sub 1 l1 l2 -- L₀: R₁⁻ → L₁, L₂
+    l1 = add 0 l0    -- L₁: R₀⁺ → L₀
+    l2 = sub 2 l3 l4 -- L₂: R₂⁻ → L₃, L₄
+    l3 = add 0 l2    -- L₃: R₀⁺ → L₂
+    l4 = halt        -- L₄: HALT
+```
+
+## Execute by passing initial state.
+```haskell
+simpleExample [0, 2, 4] == [6, 0, 0]
+```
+
 ## Example usage:
 ```haskell
 *Main> analyseEncodedProgram cwQ1 [0, 7]

@@ -63,6 +63,8 @@ set 0 x (y : ys) = x : ys
 set n x (y : ys) = y : set (n - 1) x ys
 set  _ _ _ = undefined
 
+-- Attempts to decerement given register then. If decrement
+-- successfull, execute first instruction, otherwise execute second.
 sub :: Register -> Instruction -> Instruction -> Instruction
 sub i f g !state
   | n == 0    = g s
@@ -74,6 +76,7 @@ sub i f g !state
         | showSteps = traceShowId state
         | otherwise = state
 
+-- Increments given register then executes given instruction.
 add :: Register -> Instruction -> Instruction
 add i f !state
   = f $ set i (n + 1) s
@@ -215,5 +218,18 @@ analyseProgram program state = do
   putStrLn $ "\tInitial State: " ++ show state
   putStrLn $ (\(!s) -> "\tFinal State: " ++ show s) (runProgram program state)
 
+-- If you are just simulating, your whole
+-- program is represented as one instruction.
+-- R0 = R1 + R2
+simpleExample :: Instruction
+simpleExample = l0
+  where
+    l0 = sub 1 l1 l2 -- L₀: R₁⁻ → L₁, L₂
+    l1 = add 0 l0    -- L₁: R₀⁺ → L₀
+    l2 = sub 2 l3 l4 -- L₂: R₂⁻ → L₃, L₄
+    l3 = add 0 l2    -- L₃: R₀⁺ → L₂
+    l4 = halt        -- L₄: HALT
 
-
+simulateRandomExample :: IO ()
+simulateRandomExample = do
+  print (simpleExample [0, 3, 4])
