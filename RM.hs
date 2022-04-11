@@ -61,7 +61,7 @@ halt = id
 set :: Register -> Int -> Instruction
 set 0 x (y : ys) = x : ys
 set n x (y : ys) = y : set (n - 1) x ys
-set  _ _ _ = undefined
+set _ _ [] = error "Not enough registers!"
 
 -- Attempts to decerement given register then. If decrement
 -- successfull, execute first instruction, otherwise execute second.
